@@ -39,8 +39,17 @@ public class BankingTest {
 		myConnection.close();		
 		myDAO = null; // Pas vraiment utile
 	}
-
+        
+        
+        @Test (expected = Exception.class)
+        public void negatif () throws Exception{
+           myDAO.bankTransferTransaction(0, 1, 110.0f);
+        }
 	
+        @Test (expected = Exception.class)
+        public void existepas () throws Exception{
+           myDAO.bankTransferTransaction(2, 1, 50.0f);
+        }
 	@Test
 	public void findExistingCustomer() throws SQLException {
 		float balance = myDAO.balanceForCustomer(0);

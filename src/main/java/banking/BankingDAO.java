@@ -42,7 +42,12 @@ public class BankingDAO {
 	 * @param amount le montant à trasférer (positif ou nul)
 	 * @throws java.lang.Exception si quelque chose ne marche pas
 	 */
+        
+        
 	public void bankTransferTransaction(int fromID, int toID, float amount) throws Exception {
+              
+                
+                int numberUpdated=0;
 		if (amount < 0)
 			throw new IllegalArgumentException("Le montant ne doit pas être négatif");
 	
@@ -55,7 +60,16 @@ public class BankingDAO {
 				// On débite le 1° client
 				statement.setFloat( 1, amount * -1);
 				statement.setInt(2, fromID);
-				int numberUpdated = statement.executeUpdate();
+                              
+                                    numberUpdated = statement.executeUpdate()  ;
+                                    if (numberUpdated !=1){
+                                        myConnection.rollback();
+                                        throw new Exception();
+                                        
+                                    }
+                                
+                            
+
 
 				// On crédite le 2° client
 				statement.clearParameters();
